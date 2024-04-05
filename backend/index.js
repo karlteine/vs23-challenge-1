@@ -1,32 +1,25 @@
-const fs = require("fs/promises");
-const bodyParser = require("body-parser")
-const path = require("path");
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
+const PORT = 3001;
 
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "..", "build")));
-app.use(express.static('public'));
+app.use(cors());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
+app.get('/meals', (req, res) => {
+  fs.readFile(path.join(__dirname, 'data', 'meals.json'), 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading meals.json file:', err);
+      res.status(500).send('Error reading meals.json file');
+      return;
+    }
+
+    res.json(JSON.parse(data));
+  });
 });
 
-app.get("/meals", async (req, res) => {
-  const meals = "[]" // data should be read from file
-  res.json(JSON.parse(meals));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
-app.use((req, res) => {
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  res.status(404).json({ message: "Not found" });
-});
-
-app.listen(3001);
