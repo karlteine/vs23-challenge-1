@@ -1,20 +1,21 @@
-const MealItem = (props) => {
+import React from 'react';
+
+const MealItem = ({ meal }) => {
     return (
-        <li>
+        <li className="meal-item">
+            <img src={meal.image} alt={meal.name} />
             <article>
-                <img src={require(`../assets/${props.meal.image}`)} alt={props.meal.name}/>
-                <div>
-                    <h3>{props.meal.name}</h3>
-                    <p>props.meal.price</p>
-                    <p>{props.meal.description}</p>
+                <div className="meal-item-description">
+                    <h3>{meal.name}</h3>
+                    <p>{meal.description}</p>
                 </div>
-                <p>
-                    <button >Add to Cart</button>
-                </p>
+                <div className="meal-item-actions">
+                    <p className="meal-item-price">${meal.price}</p>
+                    <button className="button">Add to Cart</button>
+                </div>
             </article>
         </li>
-        
-    )
+    );
 }
 
-export default MealItem
+export default MealItem;

@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import MealItem from './MealItem';
 
 const Meals = () => {
+    const [meals, setMeals] = useState([]);
+
     useEffect(() => {
-        // Fetch data from backend server
-        fetch('http://localhost:3001/meals') // Adjust the URL based on your backend server configuration
+
+        fetch('http://localhost:3001/meals')
             .then(response => response.json())
-            .then(data => console.log(data)) // Log the fetched data to the console
+            .then(data => setMeals(data))
             .catch(error => console.error('Error fetching meals:', error));
     }, []);
 
     return (
-        <div>
-            {/* You can render the fetched data in your component as needed */}
-            <h2>Meals</h2>
-            {/* Placeholder content for now */}
-        </div>
+        <ul id="meals">
+            {meals.map(meal => (
+                <MealItem key={meal.id} meal={meal} />
+            ))}
+        </ul>
     );
 }
 
