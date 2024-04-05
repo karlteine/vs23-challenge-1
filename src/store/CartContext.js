@@ -8,25 +8,19 @@ export const CartProvider = ({ children }) => {
   const addItem = (item) => {
     const updatedCartItems = [...cartItems, item];
     setCartItems(updatedCartItems);
-
-    // Log cart data with quantities
-    console.log('Cart Data:', updatedCartItems.reduce((cartData, cartItem) => {
-  
-      const existingItemIndex = cartData.findIndex(item => item.id === cartItem.id);
-      if (existingItemIndex !== -1) {
-     
-        cartData[existingItemIndex].quantity++;
-      } else {
-       
-        cartData.push({ ...cartItem, quantity: 1 });
-      }
-      return cartData;
-    }, []));
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  const dispatch = { clearCart }; // Define dispatch object
+
   return (
-    <CartContext.Provider value={{ cartItems, addItem }}>
+    <CartContext.Provider value={{ cartItems, addItem, dispatch }}>
       {children}
     </CartContext.Provider>
   );
 };
+
+export default CartContext;
