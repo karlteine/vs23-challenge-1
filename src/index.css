@@ -94,6 +94,11 @@ h1 {
 
 .meal-item-description {
   margin: 1rem;
+  height: 10rem; 
+  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .meal-item-price {

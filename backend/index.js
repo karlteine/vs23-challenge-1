@@ -8,6 +8,7 @@ const PORT = 3001;
 
 app.use(cors());
 
+app.use('/images', express.static(path.join(__dirname, '..', 'src', 'assets', 'images')));
 app.get('/meals', (req, res) => {
   fs.readFile(path.join(__dirname, 'data', 'meals.json'), 'utf8', (err, data) => {
     if (err) {
